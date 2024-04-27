@@ -1,0 +1,19 @@
+{
+  "name": "to_do",
+  "version": "1.0.0",
+  "description": "TO_DO_APP",
+  "main": "registration.js",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0",
+    "zod": "^3.22.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Mahitha Pasupuleti",
+  "type": "module",
+  "license": "ISC"
+}
