@@ -1,9 +1,11 @@
 import express from 'express';
-import { config } from 'dotenv';
+// import { config } from 'dotenv';
+import dotenv from 'dotenv';
+dotenv.config();
 import bodyParser from 'body-parser';
 import { z } from "zod";
 
-const app = express();
+const app = express()
 const PORT = process.env.PORT;
 
 /* 
@@ -34,8 +36,13 @@ const typeChecking = z.object({
 // Parse JSON bodies
 app.use(bodyParser.json());
 
+// Define a route using app.get
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 // Creating a TO-DO list which contains (Date, Must-Do, Should_Do, Could_do, I_Have_Time)
-app.get('/createTodo', function(req, res) {
+app.post('/createTodo', function(req, res) {
   try {
     const dataEntry = typeChecking.safeParse(req.body);
     // Storing data in values
@@ -59,8 +66,8 @@ app.get('/createTodo', function(req, res) {
       "Response": typeChecking.safeParse(req.body)
     })
   }
-})
+});
 
 app.listen(PORT, () =>
-  console.log('Example app listening on port 3000!')
+  console.log('Example app listening on port ' + PORT)
 );
