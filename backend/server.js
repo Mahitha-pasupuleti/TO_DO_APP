@@ -1,9 +1,10 @@
 import express from 'express';
-// import { config } from 'dotenv';
 import dotenv from 'dotenv';
 dotenv.config();
+import {newTodoEntry} from './database.js';
 import bodyParser from 'body-parser';
 import { z } from "zod";
+import mongoose from 'mongoose';
 
 const app = express()
 const PORT = process.env.PORT;
@@ -33,6 +34,9 @@ const typeChecking = z.object({
   "I_Have_Time": z.array(dynamicItems).min(0)
 })
 
+/* 
+MIDDLEWARE
+*/
 // Parse JSON bodies
 app.use(bodyParser.json());
 
@@ -47,14 +51,15 @@ app.post('/createTodo', function(req, res) {
     const dataEntry = typeChecking.safeParse(req.body);
     // Storing data in values
     const currentDate = dataEntry.data.Entry_Date;
-    const mustDoItems = dataEntry.data.Must_Do;
-    const shouldDoItems = dataEntry.data.Should_Do;
-    const couldDoItems = dataEntry.data.Could_Do;
-    const iHaveTimeItems = dataEntry.data.I_Have_Time;
+    // const mustDoItems = dataEntry.data.Must_Do;
+    // const shouldDoItems = dataEntry.data.Should_Do;
+    // const couldDoItems = dataEntry.data.Could_Do;
+    // const iHaveTimeItems = dataEntry.data.I_Have_Time;
     
     if(currentDate == false) {
       res.send("Enter a proper date in MM/DD/YYYY format");
     } else {
+      newTodoEntry(dataEntry)
       res.send(dataEntry);
     }
   }
